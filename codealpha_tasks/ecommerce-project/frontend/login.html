@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="auth-container">
+        <h2>Login</h2>
+
+        <input type="email" id="email" placeholder="Enter Email"><br><br>
+        <input type="password" id="password" placeholder="Enter Password"><br><br>
+
+        <button onclick="login()">Login</button>
+
+        <p>
+            Don't have an account? 
+            <a href="register.html">Register</a>
+        </p>
+    </div>
+
+    <script>
+        async function login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (!email || !password) {
+                alert("Please fill all fields");
+                return;
+            }
+
+            try {
+                const res = await fetch("http://localhost:5000/api/users/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("user", data.user.name); // ✅ fixed
+
+                    alert("Login successful");
+                    window.location.href = "index.html";
+                } else {
+                    alert(data.message);
+                }
+            } catch (err) {
+                alert("Server error");
+                console.log(err);
+            }
+        }
+    </script>
+
+</body>
+</html>

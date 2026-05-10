@@ -1,0 +1,363 @@
+:root {
+    --primary: #6366f1;
+    --secondary: #8b5cf6;
+    --accent: #22c55e;
+    --bg: #f1f5f9;
+    --text: #0f172a;
+}
+
+/* GLOBAL */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    color: var(--text);
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar h2 {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.navbar a {
+    text-decoration: none;
+    margin-left: 20px;
+    color: var(--text);
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    color: var(--primary);
+}
+
+.navbar a.active {
+    color: var(--primary);
+    font-weight: 600;
+    padding-bottom: 3px;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 60px 20px 30px;
+    position: relative;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 14px;
+}
+
+/* glowing background effect */
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+    top: 20%;
+    left: 20%;
+    filter: blur(80px);
+    opacity: 0.3;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+    bottom: 10%;
+    right: 20%;
+    filter: blur(80px);
+    opacity: 0.3;
+}
+
+.section-title {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 22px;
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* PRODUCT GRID */
+#products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 30px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: auto;
+    border-radius: 25px;
+}
+
+/* CARD */
+.card {
+    position: relative;
+    background: white;
+    border-radius: 18px;
+    padding: 15px;
+    text-align: center;
+    transition: 0.3s;
+    border: 1px solid #eee;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(120deg, transparent, #6366f1, transparent);
+
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+
+    pointer-events: none;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* IMAGE FIX */
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #f8fafc;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+/* TEXT */
+.card h3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.card p {
+    font-size: 18px;
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* BUTTON */
+button {
+    margin-top: 12px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 6px 15px rgba(99, 102, 241, 0.3);
+}
+
+.btn-view {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+
+.btn-cart {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: white;
+}
+
+/* PRODUCT PAGE */
+.product-card {
+    display: flex;
+    gap: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 1000px;
+    margin: 40px auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.image-section img {
+    max-width: 350px;
+    border-radius: 15px;
+    background: #f1f5f9;
+    padding: 20px;
+}
+
+.details h1 {
+    margin-bottom: 10px;
+}
+
+.desc {
+    color: #555;
+}
+
+.price {
+    font-size: 24px;
+    color: var(--primary);
+    margin: 15px 0;
+}
+
+/* CART */
+.cart-container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    background: white;
+    padding: 18px;
+    border-radius: 18px;
+    margin: 15px 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+}
+
+.cart-item:hover {
+    transform: translateY(-4px);
+}
+
+.cart-item img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    background: #f1f5f9;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.cart-details {
+    flex: 1;
+}
+
+.cart-details h3 {
+    margin: 0 0 5px;
+}
+
+.cart-title {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 600;
+    color: #8b5cf6;
+}
+
+.qty-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.qty-box span {
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+}
+
+.qty-box button {
+    border: none;
+    background: transparent;
+    color: var(--primary);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 2px 6px;
+}
+
+.qty-box button:hover {
+    color: var(--secondary);
+}
+
+.remove-btn {
+    margin-top: 12px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.cart-summary {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* AUTH */
+.auth-container {
+    width: 320px;
+    margin: 80px auto;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    text-align: center;
+}
+
+.auth-container input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* TOAST */
+#toast {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    color: white;
+    padding: 14px 20px;
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.4s;
+}
+
+#toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}

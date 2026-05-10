@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <h2 onclick="goHome()">MyShop</h2>
+        <div>
+            <button onclick="goHome()">Home</button>
+            <button onclick="goCart()">Cart</button>
+        </div>
+    </nav>
+
+    <div id="product" class="product-container"></div>
+
+    <!-- TOAST -->
+    <div id="toast"></div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        async function loadProduct() {
+            try {
+                const res = await fetch(`http://localhost:5000/api/products/${id}`);
+                const p = await res.json();
+
+                document.getElementById("product").innerHTML = `
+                    <div class="product-card">
+
+                        <div class="image-section">
+                            <img src="${p.image}" alt="${p.name}">
+                        </div>
+
+                        <div class="details">
+                            <h1>${p.name}</h1>
+                            <p class="desc">${p.description}</p>
+
+                            <h2 class="price">₹${p.price}</h2>
+
+                            <button onclick="addToCart('${p._id}')">
+                                Add to Cart
+                            </button>
+                        </div>
+
+                    </div>
+                `;
+            } catch (err) {
+                document.getElementById("product").innerHTML = "<p>Failed to load product</p>";
+                console.log(err);
+            }
+        }
+
+        loadProduct();
+
+        function addToCart(id) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push(id);
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            showToast("Added to Cart");
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.classList.add("show");
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 2000);
+        }
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+        function goCart() {
+            window.location.href = "cart.html";
+        }
+    </script>
+
+</body>
+</html>

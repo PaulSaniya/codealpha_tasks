@@ -1,0 +1,305 @@
+/* ===== GENERAL ===== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  background: #ffffff;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* ===== PROFILE MENU ===== */
+.profile-menu {
+  position: relative;
+}
+
+.profile-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #5b5fef;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: none;
+  min-width: 120px;
+}
+
+.dropdown p {
+  margin: 0;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.dropdown p:hover {
+  background: #f3f4f6;
+}
+
+/* ===== MAIN FEED ===== */
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 0 10px;
+  background: transparent;
+}
+
+/* ===== CREATE POST BOX ===== */
+.post-box textarea {
+  width: 96%;
+  min-height: 70px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  resize: none;
+  outline: none;
+  display: block;
+}
+
+/* ===== ACTION ROW ===== */
+.post-actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0px;
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
+
+.file-name {
+  font-size: 13px;
+  color: #555;
+  margin-left: 8px;
+}
+
+/* ===== FILE BUTTON (+) ===== */
+.file-label {
+  width: 36px;
+  height: 36px;
+  background: #5b5fef;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.file-label input {
+  display: none;
+}
+
+/* ===== POST BUTTON ===== */
+.post-btn {
+  padding: 8px 16px;
+  background: #5b5fef;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.post-btn:hover {
+  opacity: 0.9;
+}
+
+/* ===== POSTS ===== */
+.post {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: 0.2s;
+}
+
+.post:hover {
+  transform: translateY(-2px);
+}
+
+/* ===== USER INFO ===== */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #5b5fef;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.avatar.small {
+  width: 25px;
+  height: 25px;
+  font-size: 12px;
+}
+
+/* ===== POST CONTENT ===== */
+.post h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.post p {
+  margin: 5px 0;
+}
+
+.post img {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* ===== LIKE BUTTON ===== */
+.post button {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* ===== COMMENTS ===== */
+.comments {
+  margin-top: 10px;
+}
+
+.comment {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.comment p {
+  margin: 2px 0;
+  font-size: 14px;
+}
+
+/* ===== COMMENT BOX ===== */
+.comment-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.comment-box input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.comment-box button {
+  height: 40px;
+  padding: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -5px;
+}
+
+.comment-box button:hover {
+  opacity: 0.9;
+}
+
+/* ======================================================
+   🔵 NEW: AUTH PAGES (LOGIN + REGISTER UI IMPROVEMENT)
+   (ADDED ONLY — NO EXISTING CODE CHANGED)
+====================================================== */
+
+.auth-container {
+  width: 340px;
+  background: white;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  text-align: center;
+  margin: auto;
+  margin-top: 60px; /* 👈 ADD THIS */
+}
+
+.auth-container h2 {
+  color: #5b5fef;
+  margin-bottom: 20px;
+}
+
+.auth-container input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.auth-container input:focus {
+  border-color: #5b5fef;
+  box-shadow: 0 0 6px rgba(91,95,239,0.4);
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #5b5fef;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.auth-container button:hover {
+  background: #4a4ee0;
+}
+
+.auth-container p {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.auth-container a {
+  color: #5b5fef;
+  text-decoration: none;
+  font-weight: bold;
+}

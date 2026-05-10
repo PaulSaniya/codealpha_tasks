@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin</title>
+</head>
+<body>
+
+    <h1>Add Product</h1>
+
+    <input id="name" placeholder="Name">
+    <input id="price" placeholder="Price">
+    <input id="image" placeholder="Image URL">
+    <input id="desc" placeholder="Description">
+
+    <button onclick="addProduct()">Add</button>
+
+    <script>
+        function addProduct() {
+            fetch("http://localhost:5000/api/products", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": localStorage.getItem("token")
+                },
+                body: JSON.stringify({
+                    name: name.value,
+                    price: price.value,
+                    image: image.value,
+                    description: desc.value
+                })
+            })
+            .then(res => res.json())
+            .then(data => alert("Product Added"));
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <h2 onclick="goHome()">MyShop</h2>
+    </nav>
+
+    <h1 class="cart-title" id="cartTitle">Your Cart</h1>
+
+    <div id="cart" class="cart-container"></div>
+
+    <div class="cart-summary" id="summary">
+        <h2 id="total"></h2>
+        <button type="button" onclick="placeOrder()">Place Order</button>
+    </div>
+
+    <div id="toast"></div>
+
+    <script>
+        // ✅ SAFE LOGIN CHECK (no blank page)
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            window.location.href = "login.html";
+        }
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let productMap = {};
+
+        /* 🔥 INITIAL LOAD */
+        async function initCart() {
+    const container = document.getElementById("cart");
+    container.innerHTML = "";
+
+    if (cart.length === 0) {
+        container.innerHTML = "<p style='text-align:center'>Cart is empty</p>";
+        document.getElementById("summary").style.display = "none";
+        return;
+    }
+
+    document.getElementById("summary").style.display = "block";
+
+    for (let item of cart) {
+        try {
+            const res = await fetch(`http://localhost:5000/api/products/${item.id}`);
+
+            if (!res.ok) throw new Error("Product not found");
+
+            const p = await res.json();
+
+            productMap[item.id] = p;
+
+            container.innerHTML += createCartItem(p, item.quantity);
+
+        } catch (err) {
+            console.log("Removing invalid product:", item.id);
+
+            // remove from cart automatically
+            cart = cart.filter(i => i.id !== item.id);
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
+    }
+
+    updateTotal();
+}
+        initCart();
+
+        /* 🔥 CREATE ITEM */
+        function createCartItem(p, qty) {
+            return `
+            <div class="cart-item" id="${p._id}">
+                <img src="${p.image}">
+                
+                <div class="cart-details">
+                    <h3>${p.name}</h3>
+                    <p class="price">₹${p.price}</p>
+
+                    <div class="qty-box">
+                        <button onclick="changeQty('${p._id}', -1)">−</button>
+                        <span id="qty-${p._id}">${qty}</span>
+                        <button onclick="changeQty('${p._id}', 1)">+</button>
+                    </div>
+
+                    <button class="remove-btn" onclick="removeFromCart('${p._id}')">
+                        Remove
+                    </button>
+                </div>
+            </div>
+            `;
+        }
+
+        /* 🔥 CHANGE QTY */
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+
+            item.quantity += delta;
+
+            if (item.quantity <= 0) {
+                removeFromCart(id);
+                return;
+            }
+
+            document.getElementById(`qty-${id}`).innerText = item.quantity;
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateTotal();
+        }
+
+        /* 🔥 REMOVE ITEM */
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            const el = document.getElementById(id);
+            if (el) el.remove();
+
+            if (cart.length === 0) {
+                document.getElementById("cart").innerHTML = "<p style='text-align:center'>Cart is empty</p>";
+                document.getElementById("summary").style.display = "none";
+            }
+
+            updateTotal();
+        }
+
+        /* 🔥 TOTAL */
+        function updateTotal() {
+            let total = 0;
+
+            cart.forEach(item => {
+                const p = productMap[item.id];
+                if (p) total += p.price * item.quantity;
+            });
+
+            document.getElementById("total").innerText = "Total: ₹" + total;
+        }
+
+        /* 🔥 PLACE ORDER (WITH TOKEN) */
+        function placeOrder() {
+            fetch("http://localhost:5000/api/orders", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                body: JSON.stringify({
+                    products: cart
+                })
+            })
+            .then(res => res.json())
+            .then(() => {
+                localStorage.removeItem("cart");
+                showOrderSuccess();
+            })
+            .catch(err => {
+                showToast("Order failed");
+                console.log(err);
+            });
+        }
+
+        /* 🔥 TOAST */
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            if (!toast) return;
+
+            toast.innerText = message;
+            toast.classList.add("show");
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 2000);
+        }
+
+        /* 🔥 NAV */
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+        /* 🔥 SUCCESS UI */
+        function showOrderSuccess() {
+            const container = document.getElementById("cart");
+
+            document.getElementById("cartTitle").style.display = "none";
+
+            container.innerHTML = `
+                <div style="text-align:center; padding:40px">
+                    <h2>Order Placed Successfully!</h2>
+                    <p>Your items will be delivered soon.</p>
+                    <button onclick="goHome()">Continue Shopping</button>
+                </div>
+            `;
+
+            document.getElementById("summary").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Orders</title>
+</head>
+<body>
+
+    <h1>My Orders</h1>
+
+    <div id="orders"></div>
+
+    <script>
+        fetch("http://localhost:5000/api/orders", {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("orders").innerHTML =
+                JSON.stringify(data, null, 2);
+        });
+    </script>
+
+</body>
+</html>
